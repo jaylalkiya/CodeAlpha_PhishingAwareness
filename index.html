@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PhishGuard - Phishing Awareness Training</title>
+  <meta name="description" content="Interactive phishing awareness training: spot phishing emails and fake websites, learn social engineering tactics, and test yourself with quizzes.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+    <a class="brand" href="#home"><span class="brand-mark">⛨</span> Phish<span>Guard</span></a>
+    <div class="progress" aria-label="Training progress">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span id="progressText">0 / 8</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Modules">
+      <a href="#home" data-nav="home"><b>⌂</b> Start</a>
+      <a href="#m1" data-nav="m1"><b>1</b> What is phishing?</a>
+      <a href="#m2" data-nav="m2"><b>2</b> Spot a phishing email</a>
+      <a href="#m3" data-nav="m3"><b>3</b> Fake websites &amp; URLs</a>
+      <a href="#m4" data-nav="m4"><b>4</b> Social engineering</a>
+      <a href="#m5" data-nav="m5"><b>5</b> Real-world attacks</a>
+      <a href="#m6" data-nav="m6"><b>6</b> Best practices</a>
+      <a href="#m7" data-nav="m7"><b>7</b> Phish or Legit? game</a>
+      <a href="#m8" data-nav="m8"><b>8</b> Final quiz</a>
+      <p class="side-note">CodeAlpha Cyber Security Internship · Task 2</p>
+    </nav>
+
+    <main id="main">
+
+      <!-- ===================================================== HOME -->
+      <section id="home" class="page">
+        <div class="hero">
+          <p class="eyebrow">Phishing Awareness Training</p>
+          <h1>Don't take the bait.</h1>
+          <p class="lead">Phishing is behind most cyber attacks: one convincing email, text or
+            phone call is often all an attacker needs. In about 20 minutes this module
+            teaches you to recognise phishing emails and fake websites, understand the
+            psychological tricks attackers use, and know exactly what to do when
+            something feels off.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#m1">Start training →</a>
+            <a class="btn" href="#m7">Jump to the game</a>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><strong>8</strong><span>short modules</span></div>
+          <div class="stat"><strong>23</strong><span>interactive challenges</span></div>
+          <div class="stat"><strong>12</strong><span>question final quiz</span></div>
+          <div class="stat"><strong>1</strong><span>certificate at the end</span></div>
+        </div>
+        <div class="card">
+          <h3>How it works</h3>
+          <ol class="steps">
+            <li>Work through modules 1-6. Each one has something to click, test or uncover.</li>
+            <li>Play <b>Phish or Legit?</b> on realistic sample emails.</li>
+            <li>Score 80% or more on the final quiz to unlock your certificate.</li>
+          </ol>
+          <p class="muted small">Your progress is saved in this browser only. Every company, person and
+            link in the examples is fictional, except the real-world case studies.</p>
+        </div>
+      </section>
+
+      <!-- ===================================================== M1 -->
+      <section id="m1" class="page">
+        <p class="eyebrow">Module 1</p>
+        <h2>What is phishing?</h2>
+        <p class="lead"><b>Phishing</b> is when an attacker pretends to be someone you trust (your bank,
+          your boss, a delivery company, IT support) to trick you into clicking a link, opening an
+          attachment, sharing a password or OTP, or sending money.</p>
+        <div class="callout">
+          <b>Why it works:</b> it attacks people, not computers. Firewalls and antivirus can't stop
+          you from typing your password into a convincing fake page.
+        </div>
+        <h3>The attacker's goal is usually one of these:</h3>
+        <div class="grid-4">
+          <div class="mini"><span>🔑</span>Steal passwords &amp; OTPs</div>
+          <div class="mini"><span>💸</span>Get you to send money</div>
+          <div class="mini"><span>🦠</span>Install malware or ransomware</div>
+          <div class="mini"><span>🗂</span>Steal personal or company data</div>
+        </div>
+        <h3>Types of phishing</h3>
+        <div class="grid-2" id="typesGrid"></div>
+        <div class="page-nav"><a class="btn" href="#home">← Back</a><a class="btn primary" href="#m2">Next: Spot a phishing email →</a></div>
+      </section>
+
+      <!-- ===================================================== M2 -->
+      <section id="m2" class="page">
+        <p class="eyebrow">Module 2</p>
+        <h2>Spot a phishing email</h2>
+        <p class="lead">This email has <b>7 red flags</b>. Click everything that looks suspicious.
+          Each red flag you find is explained below the email.</p>
+        <div class="flag-counter"><span id="flagCount">0</span> / 7 red flags found
+          <button class="link-btn" id="revealFlags">Reveal all</button></div>
+
+        <div class="mail">
+          <div class="mail-head">
+            <div class="mail-subject">⚠ Unusual sign-in activity - action required</div>
+            <div class="mail-meta">
+              <span class="avatar">N</span>
+              <div>
+                <b>NorthBank Security</b>
+                <span class="hot" data-flag="sender">&lt;security@northbank-secure-alerts.com&gt;</span>
+                <div class="muted small">to me · 09:42</div>
+              </div>
+            </div>
+          </div>
+          <div class="mail-body">
+            <p class="hot" data-flag="greeting">Dear Valued Customer,</p>
+            <p>We detected <span class="hot" data-flag="grammar">unusuall activity on you're account</span> from a new device in Moscow, Russia.</p>
+            <p class="hot" data-flag="urgency">If you do not verify your identity <b>within 24 hours</b>, your account will be
+              <b>permanently suspended</b> and all funds frozen.</p>
+            <p class="hot" data-flag="data">To keep your account active, confirm your card number, CVV and net-banking password on the secure page:</p>
+            <p><span class="hot fake-btn" data-flag="link" title="http://n0rthbank.verify-login.xyz/secure">Verify my account</span></p>
+            <div class="hot attach" data-flag="attachment">📎 NorthBank_Statement_Oct.zip <span class="muted">(1.2 MB)</span></div>
+            <p class="muted small">NorthBank Security Team<br>This is an automated message, please do not reply.</p>
+          </div>
+        </div>
+        <div id="flagList" class="flag-list"></div>
+        <div class="page-nav"><a class="btn" href="#m1">← Back</a><a class="btn primary" href="#m3">Next: Fake websites →</a></div>
+      </section>
+
+      <!-- ===================================================== M3 -->
+      <section id="m3" class="page">
+        <p class="eyebrow">Module 3</p>
+        <h2>Fake websites &amp; URL tricks</h2>
+        <p class="lead">A fake login page can look pixel-perfect. The one thing an attacker can't fake is
+          the <b>domain name</b>, so learn to read it.</p>
+
+        <h3>Anatomy of a URL</h3>
+        <div class="url-anatomy" aria-label="URL anatomy example">
+          <span class="u-scheme">https://</span><span class="u-sub">login.</span><span class="u-domain">northbank.com</span><span class="u-path">/account/settings</span>
+        </div>
+        <div class="legend">
+          <span><i class="u-scheme"></i>protocol</span>
+          <span><i class="u-sub"></i>subdomain (anything the owner wants)</span>
+          <span><i class="u-domain"></i><b>registered domain: who you're really talking to</b></span>
+          <span><i class="u-path"></i>path</span>
+        </div>
+        <div class="callout"><b>Rule of thumb:</b> find the first single <code>/</code> after <code>https://</code>.
+          The two words just before it (e.g. <code>northbank.com</code>, or three for <code>.co.in</code>/<code>.co.uk</code>)
+          are the real domain. Everything further left is just decoration.</div>
+
+        <h3>Common tricks</h3>
+        <div class="grid-2">
+          <div class="card"><h4>Typosquatting</h4><p><code>n<mark>0</mark>rthbank.com</code>, <code>northbnak.com</code>, <code>rn</code> instead of <code>m</code>. One wrong character.</p></div>
+          <div class="card"><h4>Brand in the subdomain</h4><p><code>northbank.com.<mark>secure-login.net</mark></code>. The real domain is secure-login.net.</p></div>
+          <div class="card"><h4>Extra words</h4><p><code>northbank<mark>-support</mark>.help</code>, <code>northbank<mark>-kyc</mark>.in</code>. A different domain, not the bank.</p></div>
+          <div class="card"><h4>The @ trick</h4><p><code>northbank.com<mark>@evil.ru</mark></code>. Browsers ignore everything before the @.</p></div>
+          <div class="card"><h4>Look-alike letters</h4><p>Cyrillic <code>а</code> vs Latin <code>a</code>. Shown in the address bar as <code>xn--</code> punycode.</p></div>
+          <div class="card"><h4>HTTPS ≠ safe</h4><p>The padlock means the connection is encrypted, <b>not</b> that the site is genuine. Most phishing sites use HTTPS.</p></div>
+        </div>
+
+        <h3>URL lab: safe or suspicious?</h3>
+        <p>The real bank in these examples is <code>northbank.com</code>.</p>
+        <div id="urlLab" class="url-lab"></div>
+        <p class="score-line">Score: <b id="urlScore">0</b> / <span id="urlTotal">0</span></p>
+
+        <h3>Try the URL inspector</h3>
+        <p>Paste any link to see its real domain and the warning signs. Nothing is opened or sent anywhere.</p>
+        <div class="inspector">
+          <input id="urlInput" type="text" spellcheck="false" placeholder="e.g. https://northbank.com.secure-login.net/verify">
+          <button class="btn primary" id="urlCheck">Inspect</button>
+        </div>
+        <div id="urlResult" class="url-result" aria-live="polite"></div>
+
+        <h3>Fake login page checklist</h3>
+        <ul class="checks">
+          <li>Did you arrive by clicking a link in a message? Close it and type the address yourself.</li>
+          <li>Does your password manager refuse to autofill? It doesn't recognise the domain. Big warning.</li>
+          <li>Is it asking for more than usual: OTP, CVV, ATM PIN, Aadhaar all on one page?</li>
+          <li>Pop-ups, countdown timers, poor logos or broken links elsewhere on the page.</li>
+        </ul>
+        <div class="page-nav"><a class="btn" href="#m2">← Back</a><a class="btn primary" href="#m4">Next: Social engineering →</a></div>
+      </section>
+
+      <!-- ===================================================== M4 -->
+      <section id="m4" class="page">
+        <p class="eyebrow">Module 4</p>
+        <h2>Social engineering tactics</h2>
+        <p class="lead">Social engineering is hacking the human. Instead of breaking in, attackers
+          persuade you to open the door. Almost every phishing message pulls on one of these
+          psychological levers. Click a card to see an example.</p>
+        <div class="grid-4 tactics" id="tacticsGrid"></div>
+        <div class="callout warn"><b>Spot the feeling:</b> if a message makes you feel rushed, scared, excited or
+          flattered, that's your cue to slow down. Attackers want an emotional reaction, not a considered one.</div>
+        <h3>Beyond email</h3>
+        <div class="grid-2">
+          <div class="card"><h4>📞 Vishing calls</h4><p>"Bank fraud team", "Customs officer", "IT help desk". Hang up and call back on the official number.</p></div>
+          <div class="card"><h4>💬 Smishing &amp; WhatsApp</h4><p>Parcel fees, electricity disconnection, KYC updates, "Hi mum, new number". Never pay or click from an SMS.</p></div>
+          <div class="card"><h4>🚪 Tailgating</h4><p>Someone with full hands asks you to hold the secure door. Politely ask them to badge in.</p></div>
+          <div class="card"><h4>💾 Baiting</h4><p>A USB drive labelled "Salaries 2026" left in the car park. Never plug in unknown devices.</p></div>
+        </div>
+        <div class="page-nav"><a class="btn" href="#m3">← Back</a><a class="btn primary" href="#m5">Next: Real-world attacks →</a></div>
+      </section>
+
+      <!-- ===================================================== M5 -->
+      <section id="m5" class="page">
+        <p class="eyebrow">Module 5</p>
+        <h2>Real-world phishing attacks</h2>
+        <p class="lead">These are real, publicly reported incidents. Big organisations with big security
+          budgets were all brought down by people being tricked.</p>
+        <div id="caseList" class="cases"></div>
+        <div class="page-nav"><a class="btn" href="#m4">← Back</a><a class="btn primary" href="#m6">Next: Best practices →</a></div>
+      </section>
+
+      <!-- ===================================================== M6 -->
+      <section id="m6" class="page">
+        <p class="eyebrow">Module 6</p>
+        <h2>Best practices: how not to get hooked</h2>
+        <div class="grid-2" id="practiceGrid"></div>
+        <h3>Clicked something you shouldn't have? Don't panic. Act fast:</h3>
+        <ol class="steps" id="ifClicked"></ol>
+        <div class="callout"><b>No blame:</b> anyone can be phished, including security experts.
+          Reporting quickly is the best thing you can do, and it's what a good security culture rewards.</div>
+        <div class="page-nav"><a class="btn" href="#m5">← Back</a><a class="btn primary" href="#m7">Next: Phish or Legit? →</a></div>
+      </section>
+
+      <!-- ===================================================== M7 -->
+      <section id="m7" class="page">
+        <p class="eyebrow">Module 7 · Game</p>
+        <h2>Phish or Legit?</h2>
+        <p class="lead">Read each email carefully. Hover over (or tap) the link to see where it really goes, then decide.</p>
+        <div id="game"></div>
+        <div class="page-nav"><a class="btn" href="#m6">← Back</a><a class="btn primary" href="#m8">Next: Final quiz →</a></div>
+      </section>
+
+      <!-- ===================================================== M8 -->
+      <section id="m8" class="page">
+        <p class="eyebrow">Module 8</p>
+        <h2>Final quiz</h2>
+        <p class="lead">12 questions. Score <b>80% or more</b> to earn your certificate.</p>
+        <div id="quiz"></div>
+        <div id="certificate" class="certificate-wrap" hidden></div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="footer">
+    PhishGuard · Phishing Awareness Training · built for the CodeAlpha Cyber Security Internship (Task 2)
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
