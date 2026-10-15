@@ -6,13 +6,30 @@
   <title>PhishGuard - Phishing Awareness Training</title>
   <meta name="description" content="Interactive phishing awareness training: spot phishing emails and fake websites, learn social engineering tactics, and test yourself with quizzes.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+  <meta name="theme-color" content="#020403">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <canvas id="rain" aria-hidden="true"></canvas>
+  <div class="glow-cursor" aria-hidden="true"></div>
+  <div class="scanline" id="scan" aria-hidden="true"></div>
+  <div class="crt" aria-hidden="true"></div>
+  <div id="toasts" aria-live="polite"></div>
+
+  <div id="boot" aria-hidden="true">
+    <span class="skip">click or press any key to skip</span>
+    <pre></pre>
+  </div>
+
   <header class="topbar">
-    <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
-    <a class="brand" href="#home"><span class="brand-mark">⛨</span> Phish<span>Guard</span></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu">≡</button>
+    <a class="brand" href="#home">PHISH<span>//</span>GUARD<i class="cursor-blink"></i></a>
+    <div class="prompt"><b>root@phishguard</b>:~$ <span id="cmd"></span></div>
     <div class="progress" aria-label="Training progress">
+      <span class="progress-label">CLEARANCE</span>
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
       <span id="progressText">0 / 8</span>
     </div>
@@ -20,16 +37,17 @@
 
   <div class="layout">
     <nav class="sidebar" id="sidebar" aria-label="Modules">
-      <a href="#home" data-nav="home"><b>⌂</b> Start</a>
-      <a href="#m1" data-nav="m1"><b>1</b> What is phishing?</a>
-      <a href="#m2" data-nav="m2"><b>2</b> Spot a phishing email</a>
-      <a href="#m3" data-nav="m3"><b>3</b> Fake websites &amp; URLs</a>
-      <a href="#m4" data-nav="m4"><b>4</b> Social engineering</a>
-      <a href="#m5" data-nav="m5"><b>5</b> Real-world attacks</a>
-      <a href="#m6" data-nav="m6"><b>6</b> Best practices</a>
-      <a href="#m7" data-nav="m7"><b>7</b> Phish or Legit? game</a>
-      <a href="#m8" data-nav="m8"><b>8</b> Final quiz</a>
-      <p class="side-note">CodeAlpha Cyber Security Internship · Task 2</p>
+      <p class="side-title">// MISSIONS</p>
+      <a href="#home" data-nav="home"><b>00</b> Start</a>
+      <a href="#m1" data-nav="m1"><b>01</b> What is phishing?</a>
+      <a href="#m2" data-nav="m2"><b>02</b> Spot a phishing email</a>
+      <a href="#m3" data-nav="m3"><b>03</b> Fake websites &amp; URLs</a>
+      <a href="#m4" data-nav="m4"><b>04</b> Social engineering</a>
+      <a href="#m5" data-nav="m5"><b>05</b> Real-world attacks</a>
+      <a href="#m6" data-nav="m6"><b>06</b> Best practices</a>
+      <a href="#m7" data-nav="m7"><b>07</b> Phish or Legit?</a>
+      <a href="#m8" data-nav="m8"><b>08</b> Final exam</a>
+      <p class="side-note">CodeAlpha Cyber Security Internship<br>Task 02 · Phishing Awareness</p>
     </nav>
 
     <main id="main">
@@ -37,8 +55,8 @@
       <!-- ===================================================== HOME -->
       <section id="home" class="page">
         <div class="hero">
-          <p class="eyebrow">Phishing Awareness Training</p>
-          <h1>Don't take the bait.</h1>
+          <p class="eyebrow">Phishing Awareness Training · v2.6</p>
+          <h1 class="glitch" data-text="Don't take the bait.">Don't take the bait.</h1>
           <p class="lead">Phishing is behind most cyber attacks: one convincing email, text or
             phone call is often all an attacker needs. In about 20 minutes this module
             teaches you to recognise phishing emails and fake websites, understand the
@@ -100,6 +118,8 @@
           <button class="link-btn" id="revealFlags">Reveal all</button></div>
 
         <div class="mail">
+          <div class="win-bar"><i></i><i></i><i></i><span>INTERCEPTED_MAIL_0x7f3a.eml</span><em>● THREAT DETECTED</em></div>
+          <div class="mail-inner">
           <div class="mail-head">
             <div class="mail-subject">⚠ Unusual sign-in activity - action required</div>
             <div class="mail-meta">
@@ -120,6 +140,7 @@
             <p><span class="hot fake-btn" data-flag="link" title="http://n0rthbank.verify-login.xyz/secure">Verify my account</span></p>
             <div class="hot attach" data-flag="attachment">📎 NorthBank_Statement_Oct.zip <span class="muted">(1.2 MB)</span></div>
             <p class="muted small">NorthBank Security Team<br>This is an automated message, please do not reply.</p>
+          </div>
           </div>
         </div>
         <div id="flagList" class="flag-list"></div>
@@ -228,13 +249,13 @@
         <h2>Phish or Legit?</h2>
         <p class="lead">Read each email carefully. Hover over (or tap) the link to see where it really goes, then decide.</p>
         <div id="game"></div>
-        <div class="page-nav"><a class="btn" href="#m6">← Back</a><a class="btn primary" href="#m8">Next: Final quiz →</a></div>
+        <div class="page-nav"><a class="btn" href="#m6">← Back</a><a class="btn primary" href="#m8">Next: Final exam →</a></div>
       </section>
 
       <!-- ===================================================== M8 -->
       <section id="m8" class="page">
         <p class="eyebrow">Module 8</p>
-        <h2>Final quiz</h2>
+        <h2>Final exam</h2>
         <p class="lead">12 questions. Score <b>80% or more</b> to earn your certificate.</p>
         <div id="quiz"></div>
         <div id="certificate" class="certificate-wrap" hidden></div>
@@ -247,6 +268,7 @@
     PhishGuard · Phishing Awareness Training · built for the CodeAlpha Cyber Security Internship (Task 2)
   </footer>
 
+  <script src="js/fx.js"></script>
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
 </body>

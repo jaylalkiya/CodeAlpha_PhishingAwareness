@@ -22,10 +22,15 @@
     try { localStorage.setItem(STORE, JSON.stringify(progress)); } catch (e) { /* ignore */ }
   }
 
+  const TOASTS = { m1: "MODULE 01 COMPLETE", m2: "ALL RED FLAGS FOUND", m3: "URL LAB CLEARED",
+    m4: "MODULE 04 COMPLETE", m5: "INCIDENT LOG READ", m6: "MODULE 06 COMPLETE",
+    m7: "GAME COMPLETE", m8: "EXAM PASSED - CLEARANCE GRANTED" };
+
   function complete(id) {
     if (!progress.done.includes(id)) {
       progress.done.push(id);
       save();
+      FX.toast(`[+] ${TOASTS[id]}`);
     }
     renderProgress();
   }
@@ -40,6 +45,7 @@
 
   // ------------------------------------------------------------ routing
 
+  let current = "home";
   function route() {
     const id = (location.hash || "#home").slice(1);
     const page = document.getElementById(id) && document.getElementById(id).classList.contains("page")
@@ -51,6 +57,8 @@
     const top = () => window.scrollTo({ top: 0, behavior: "instant" });
     top();
     setTimeout(top, 0);
+    current = page;
+    FX.pageChanged(page);
     // Reading modules count as done once opened; 7 and 8 need finishing.
     if (["m1", "m4", "m5", "m6"].includes(page)) complete(page);
   }
@@ -269,6 +277,10 @@
     const m = GAME_EMAILS[gi];
     box.append(el("p", "muted", `Email ${gi + 1} of ${GAME_EMAILS.length} · Score ${gscore}`));
     const mail = el("div", "mail");
+    const bar = el("div", "win-bar");
+    bar.append(el("i"), el("i"), el("i"), el("span", "", `INBOX/message_${String(gi + 1).padStart(2, "0")}.eml`),
+      el("em", "", "● ANALYSE"));
+    const inner = el("div", "mail-inner");
     const head = el("div", "mail-head");
     head.append(el("div", "mail-subject", m.subject));
     const meta = el("div", "mail-meta");
@@ -288,12 +300,13 @@
       link.addEventListener("click", show);
       body.append(link);
     }
-    mail.append(head, body);
+    inner.append(head, body);
+    mail.append(bar, inner);
     if (m.link) mail.append(status);
     box.append(mail);
 
     const choice = el("div", "choice");
-    const phish = el("button", "btn danger", "🎣 Phish");
+    const phish = el("button", "btn danger", "⚠ Phish");
     const legit = el("button", "btn ok", "✔ Legit");
     choice.append(phish, legit);
     box.append(choice);
@@ -384,7 +397,10 @@
     wrap.replaceChildren();
     const cert = el("div", "certificate");
     const date = new Date().toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
+    const id = Array.from(name + date, c => c.charCodeAt(0))
+      .reduce((h, c) => (h * 31 + c) >>> 0, 7).toString(16).toUpperCase().padStart(8, "0");
     cert.append(
+      el("span", "cert-id", `ID: PG-${id}`),
       el("div", "cert-shield", "⛨"),
       el("p", "cert-top", "Certificate of Completion"),
       el("p", "cert-small", "This certifies that"),
@@ -403,6 +419,8 @@
 
   // ------------------------------------------------------------ start
 
+  FX.init();
   renderProgress();
   route();
+  FX.boot(() => FX.pageChanged(current));
 })();

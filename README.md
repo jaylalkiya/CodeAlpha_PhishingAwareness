@@ -2,6 +2,8 @@
 
 An interactive, self-paced phishing awareness module. **CodeAlpha Cyber Security Internship, Task 2.**
 
+Built as a **hacker-console experience** instead of a slide deck. It opens with a boot sequence, runs over a live matrix-rain background with a CRT scanline effect, and headings decrypt themselves as you move between "missions".
+
 **▶ Live demo:** https://jaylalkiya.github.io/CodeAlpha_PhishingAwareness/
 
 ![PhishGuard home](docs/home.png)
@@ -20,6 +22,18 @@ An interactive, self-paced phishing awareness module. **CodeAlpha Cyber Security
 | 8 | Final quiz | 12 questions with explanations. 80% unlocks a printable **certificate** |
 
 Progress is tracked across modules and saved in the browser.
+
+## The interface
+
+- **Boot sequence:** a terminal boot log ends in `ACCESS GRANTED`. It plays once per session and you can skip it with a click or key.
+- **Matrix rain:** a canvas background with slight mouse parallax, throttled and paused when the tab is hidden.
+- **CRT screen:** scanlines, a vignette and a subtle flicker.
+- **Decrypt headings:** each heading scrambles and then resolves when you open a module.
+- **Scan sweep and staggered reveals:** cards slide in one after another.
+- **Live terminal prompt:** `root@phishguard:~$ ./train --module 03 --inspect urls` changes with each page.
+- **Clearance bar** for progress, `[+] MODULE COMPLETE` pop-ups, a red ripple on each red flag found, and a shake on wrong answers.
+- **Intercepted-mail windows** for the sample emails, and a `curl -I` bar that shows where each link really goes.
+- **Reduced-motion friendly:** every animation switches off if the OS asks for reduced motion. The certificate prints ink-friendly in white.
 
 ## Screenshots
 
@@ -52,7 +66,8 @@ It's a teaching aid, not a safety guarantee, and says so.
 
 ```
 index.html        page structure for all 8 modules
-css/style.css     dark "security console" theme, responsive, print styles for the certificate
+css/style.css     hacker-console theme, animations, responsive layout, print styles for the certificate
+js/fx.js          boot sequence, matrix rain, decrypt text, reveals, scan sweep, toasts
 js/data.js        all training content: phishing types, red flags, URLs, emails, cases, quiz
 js/app.js         navigation, progress, red-flag hunt, URL lab + inspector, game, quiz, certificate
 ```
